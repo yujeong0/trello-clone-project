@@ -2,6 +2,10 @@
     <div>
         Board
         <div>bid : {{ bid }}</div>
+        <router-link :to="`/b/${bid}/c/1`">Card 1</router-link>
+        <router-link :to="`/b/${bid}/c/2`">Card 2</router-link>
+        <hr/>
+        <router-view></router-view> <!-- App.vue 하위 Board.vue 에 router-view : Board의 children 인 Card.... 어렵군.... -->
     </div>
 </template>
 
