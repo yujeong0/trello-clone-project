@@ -43,7 +43,6 @@ export default {
                 })
                 .finally(_ => { // 언더바 ..?
                     this.loading = false
-                    
                 })
         }
     }

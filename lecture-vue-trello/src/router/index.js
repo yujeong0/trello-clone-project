@@ -8,14 +8,20 @@ import NotFound from '../components/NotFound.vue'
 
 Vue.use(VueRouter)
 
+const requireAuth = (to, from, next) => {
+  const isAuth = localStorage.getItem('token')
+  const loginPath = `/login?rPath=${encodeURIComponent(to.path)}` // 쿼리문자열로 오기 때문에 인코딩 필요
+  isAuth? next() : next(loginPath)  // Auth 있으면 next()그대로 진행, 없으면 로그인패이지...!
+}
+
 const router = new VueRouter({
   mode: 'history',
   routes: [
-    { path: '/', component: Home },
+    { path: '/', component: Home, beforeEnter: requireAuth},
     { path: '/login', component: Login },
     {   // :bid -> bid라는 변수로 받는다.
-        path: '/b/:bid', component: Board, children: [
-            { path: 'c/:cid', component: Card }
+        path: '/b/:bid', component: Board, beforeEnter: requireAuth, children: [
+            { path: 'c/:cid', component: Card, beforeEnter: requireAuth }
         ]
     },  
     { path: '*', component: NotFound }
