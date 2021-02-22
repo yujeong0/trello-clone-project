@@ -60,16 +60,15 @@ export default {
           this.boards = data.list;
         })
         .finally((_) => {
-          // 언더바 ..? (_)랑 _ 랑 같은 듯??
+          // 언더바 ..? (_)랑 _ 랑 같은 듯?? 아무것도 없을 떄 언더바 쓰는 것 같기도 하고?? 
           this.loading = false;
         });
     },
     // addBoard() {
     //   this.$store.commit('SET_IS_ADD_BOARD', true)
     // },
-    onAddBoard(title) {
-      board.create(title)
-        .then(() => this.fetchData())
+    onAddBoard() {
+      this.fetchData()
     }
   },
 };
