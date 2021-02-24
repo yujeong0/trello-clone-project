@@ -11,20 +11,22 @@
 </template>
 
 <script>
-import { setAuthInHeader } from '../api'
+import { mapGetters, mapMutations } from 'vuex'
 
 export default {
     computed: {
-        isAuth() {
-            return !!localStorage.getItem('token')  // boolean 으로 바꾼 거..
-        }
+      ...mapGetters([
+        'isAuth'
+      ])
     },
     methods: {
-        logout() {
-            delete localStorage.token
-            setAuthInHeader(null)   // http 헤더값 초기화
-            this.$router.push('/login')
-        }
+      ...mapMutations ([
+        'LOGOUT'
+      ]),
+      logout() {
+          this.LOGOUT()
+          this.$router.push('/login')
+      }
     }
 }
 </script>
