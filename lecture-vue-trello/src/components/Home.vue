@@ -14,7 +14,7 @@
         </a>
       </div>
     </div>
-    <AddBoard v-if="isAddBoard" @close="isAddBoard=false" @submit="onAddBoard"/>
+    <AddBoard v-if="isAddBoard" @close="isAddBoard=false"/>
       
   </div>
 </template>
@@ -22,7 +22,7 @@
 <script>
 import { board } from "../api";
 import AddBoard from './AddBoard.vue'
-import {mapMutations, mapState} from 'vuex'
+import {mapMutations, mapState, mapActions} from 'vuex'
 
 export default {
   components: {
@@ -31,14 +31,14 @@ export default {
   data() {
     return {
       loading: false,
-      boards: [],
       error: '',
     }
   },
   computed: {
-    ...mapState([
-      'isAddBoard'
-    ])
+    ...mapState({
+      isAddBoard: 'isAddBoard',
+      boards: 'boards'
+    })
   },
   created() {
     this.fetchData();
@@ -52,14 +52,13 @@ export default {
     ...mapMutations([
       'SET_IS_ADD_BOARD'
     ]),
+    ...mapActions([
+      'FETCH_BOARDS'
+    ]),
     fetchData() {
       this.loading = true;
-      board
-        .fetch()
-        .then((data) => {
-          this.boards = data.list;
-        })
-        .finally((_) => {
+      this.FETCH_BOARDS();
+      board.fetch().finally((_) => {
           // 언더바 ..? (_)랑 _ 랑 같은 듯?? 아무것도 없을 떄 언더바 쓰는 것 같기도 하고?? 
           this.loading = false;
         });
@@ -67,9 +66,6 @@ export default {
     // addBoard() {
     //   this.$store.commit('SET_IS_ADD_BOARD', true)
     // },
-    onAddBoard() {
-      this.fetchData()
-    }
   },
 };
 </script>
