@@ -14,7 +14,7 @@ export default {
   props: ['data'],
   computed: {
       ...mapState({
-          boardId: state => state.boardId
+          boardId: state => state.board.id
       })
   }
 }
