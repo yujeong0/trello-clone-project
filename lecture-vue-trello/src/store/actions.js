@@ -1,5 +1,4 @@
 import * as api from '../api'
-
 const actions = {  // 비동기
     LOGIN({commit}, {email, password}) {    // api call 을 위한 login
         return api.auth.login(email, password)  
@@ -17,6 +16,10 @@ const actions = {  // 비동기
         return api.board.fetch(id).then(data => {
             commit('SET_BOARD', data.item)
         })
+    },
+    ADD_CARD({dispatch, state}, {title, listId, pos}) {
+        return api.card.create({title, listId, pos})
+            .then(() => dispatch('FETCH_BOARD', {id: state.board.id}))
     }
 }
 

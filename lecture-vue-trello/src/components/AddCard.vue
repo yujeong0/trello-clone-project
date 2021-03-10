@@ -9,7 +9,10 @@
 </template>
 
 <script>
+import {mapActions} from 'vuex'
+
 export default {
+  props: ['listId'],
   data() {
     return {
       inputTitle: ''
@@ -22,17 +25,25 @@ export default {
   },
   mounted() {
       this.$refs.inputText.focus()
-      this.setupClickOutside(this.$el)  // AddCard 컴포넌트의 element가 넘어감
+      this.setupClickOutside()  // AddCard 컴포넌트의 element가 넘어감
+  },
+  beforeDestroy() {
+      removeEventListener('click', this.closeWindow)
   },
   methods: {
+      ...mapActions ([
+          'ADD_CARD',
+      ]),
       onSubmit() {
-          console.log('submit@')
+          if(this.invalidInput) return
+          const {inputTitle} = this.
       },
-      setupClickOutside(el) {
-          document.querySelector('body').addEventListener('click', e => {
-              if(el.contains(e.target)) return
-              this.$emit('close')
-          })
+      closeWindow() {
+          if(this.$el.contains(e.target)) return
+          this.$emit('close')
+      },
+      setupClickOutside() {
+          document.querySelector('body').addEventListener('click', this.closeWindow)
       }
   }
 }
