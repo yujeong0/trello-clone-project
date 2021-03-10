@@ -14,6 +14,7 @@
                 </div>
             </div>
         </div>
+        <router-view></router-view> <!-- 여기서 card 중첩라우팅  -->
     </div>
 </template>
 

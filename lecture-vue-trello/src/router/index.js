@@ -22,7 +22,8 @@ const router = new VueRouter({
     { path: '/login', component: Login },
     {   // :bid -> bid라는 변수로 받는다.
         path: '/b/:bid', 
-        component: Board, beforeEnter: requireAuth, 
+        component: Board, 
+        beforeEnter: requireAuth, 
         children: [{ path: 'c/:cid', component: Card, beforeEnter: requireAuth }]
     },  
     { path: '*', component: NotFound }
