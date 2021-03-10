@@ -15,7 +15,7 @@ export default {
   props: ['listId'],
   data() {
     return {
-      inputTitle: ''
+      inputTitle: '',
     }
   },
   computed: {
@@ -28,6 +28,7 @@ export default {
       this.setupClickOutside()  // AddCard 컴포넌트의 element가 넘어감
   },
   beforeDestroy() {
+      document.querySelector('body').removeEventListener('click', this.setupClickOutside)
       removeEventListener('click', this.closeWindow)
   },
   methods: {
@@ -36,11 +37,9 @@ export default {
       ]),
       onSubmit() {
           if(this.invalidInput) return
-          const {inputTitle} = this.
-      },
-      closeWindow() {
-          if(this.$el.contains(e.target)) return
-          this.$emit('close')
+          const {inputTitle, listId} = this
+          this.ADD_CARD({title: inputTitle, listId})
+            .finally(() => this.inputTitle = '')
       },
       setupClickOutside() {
           document.querySelector('body').addEventListener('click', this.closeWindow)

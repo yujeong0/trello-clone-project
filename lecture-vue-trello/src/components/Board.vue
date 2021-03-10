@@ -38,7 +38,6 @@ export default {
     },
     created() {
         this.fetchData()
-        this.bid = this.$route.params.bid
     },
     methods: {
         ...mapActions([
