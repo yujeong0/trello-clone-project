@@ -39,7 +39,7 @@ export default {
           if(this.invalidInput) return
           const {inputTitle, listId} = this
           const pos = this.newCardPos()
-          this.ADD_CARD({title: inputTitle, listId})
+          this.ADD_CARD({title: inputTitle, listId, pos})
             .finally(() => this.inputTitle = '')
       },
       newCardPos() {
