@@ -21,6 +21,8 @@
 <script>
 import {mapState, mapActions} from 'vuex'
 import List from './List.vue'
+import dragula from 'dragula'
+import 'dragula/dist/dragula.css'
 
 export default {
     components: {
@@ -29,7 +31,8 @@ export default {
     data() {
         return {
             bid: 0,
-            loading: false
+            loading: false,
+            dragulaCards: null
         }
     },
     computed: {
@@ -40,9 +43,48 @@ export default {
     created() {
         this.fetchData()
     },
+    updated() {
+      if (this.dragulaCards) this.dragulaCards.destroy()
+
+      this.dragulaCards = dragula([
+        ...Array.from(this.$el.querySelectorAll('.card-list')) //배열로 받은 결과를 분해하여 전달... 그런데 대괄호로 감싸져있으니 다시 배열됨
+      ]).on('drop', (el, wrapper, target, siblings) => {
+        const targetCard = {
+          id : el.dataset.cardId * 1, // 숫자로 바꾸기
+          pos: 65535
+        }
+        let prevCard = null
+        let nextCard = null
+        Array.from(wrapper.querySelectorAll('.card-item'))
+          .forEach((el, idx, arr) => {
+            const cardId = el.dataset.cardId * 1
+            if (cardId == targetCard.id) {
+              prevCard = idx > 0 ? {
+                id: arr[idx-1].dataset.cardId * 1,
+                pos: arr[idx-1].dataset.cardPos * 1,
+              } : null
+              nextCard = idx < arr.length-1 ? {
+                id: arr[idx+1].dataset.cardId * 1,
+                pos: arr[idx+1].dataset.cardPos * 1
+              } : null
+            }
+          })
+
+          if (!prevCard && nextCard)  // 맨 앞에 있다면
+            targetCard.pos = nextCard.pos / 2
+          else if(!nextCard && prevCard)  // 맨 뒤에 있다면
+            targetCard.pos = prevCard.pos * 2
+          else if(prevCard && nextCard)  // 중간에 삽입되어있다면
+            targetCard.pos = (prevCard.pos + nextCard.pos) / 2        
+
+          console.log(targetCard)
+          this.UPDATE_CARD(targetCard)
+      })
+    },
     methods: {
         ...mapActions([
-            'FETCH_BOARD'
+            'FETCH_BOARD',
+            'UPDATE_CARD'
         ]),
         fetchData() {
             this.loading = true
