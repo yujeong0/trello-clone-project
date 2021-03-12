@@ -133,7 +133,7 @@ export default {
           if (this.lDragger) this.lDragger.destroy()
 
           const options = {
-            invalid: (el, handle) => !/^list/.test(handle.className)
+            invalid: (el, handle) => !/^list/.test(handle.className)    // 이게 대체 뭔데...?
           }
           this.lDragger = dragger.init(
             Array.from(this.$el.querySelectorAll('.list-section')),
