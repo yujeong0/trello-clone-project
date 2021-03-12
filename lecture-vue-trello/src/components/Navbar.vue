@@ -41,9 +41,9 @@ export default {
         this.$el.style.backgroundColor = this.navbarColor
 
         const body = document.querySelector('body')
-        const container = document.querySelector('.container')
+        // const container = document.querySelector('.container')
         if(body) body.style.backgroundColor = this.bodyColor
-        if(container) container.style.backgroundColor = this.bodyColor
+        // if(container) container.style.backgroundColor = this.bodyColor
       }
     }
 }
