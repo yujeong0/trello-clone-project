@@ -17,6 +17,10 @@ const actions = {  // 비동기
             commit('SET_BOARD', data.item)
         })
     },
+    DELETE_BOARD (_, {id}) {
+        return api.board.destroy(id)
+    },
+
     ADD_CARD({dispatch, state}, {title, listId, pos}) {
         return api.card.create(title, listId, pos)
             .then(() => dispatch('FETCH_BOARD', {id: state.board.id}))
