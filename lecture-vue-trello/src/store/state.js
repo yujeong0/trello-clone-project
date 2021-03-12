@@ -3,7 +3,10 @@ const state = {
     isAddBoard: false,
     boards: [],
     board: {},
-    card: {}
+    card: {},
+    bodyColor: '#ffffff',
+    navbarCololr: '#026aa7'
+
 }
 
 export default state
