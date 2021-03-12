@@ -13,6 +13,9 @@
                     <div class="list-wrapper" v-for="list in board.lists" :key="list.pos">
                       <List :data="list" />
                     </div>
+                    <div class="list-wrapper">
+                      <AddList />
+                    </div>
                   </div>
                 </div>
             </div>
@@ -25,13 +28,15 @@
 <script>
 import {mapState, mapMutations, mapActions} from 'vuex'
 import List from './List.vue'
+import AddList from './AddList'
 import BoardSettings from './BoardSettings.vue'
 import dragger from '../utils/dragger.js'
 
 export default {
     components: {
       List,
-      BoardSettings
+      BoardSettings,
+      AddList
     },
     data() {
         return {
