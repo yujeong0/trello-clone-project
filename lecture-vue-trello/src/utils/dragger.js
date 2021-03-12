@@ -13,14 +13,14 @@ const dragger = {
         candidates.forEach((el, idx, arr) => {
             const id = el.dataset[type + 'Id'] * 1
             if (id === curId) {
-            prev = idx > 0 ? {
-                id: arr[idx-1].dataset[type + 'Id'] * 1,
-                pos: arr[idx-1].dataset[type + 'Pos'] * 1,
-            } : null
-            next = idx < arr.length-1 ? {
-                id: arr[idx+1].dataset[type + 'Id'] * 1,
-                pos: arr[idx+1].dataset[type + 'Pos'] * 1
-            } : null
+                prev = idx > 0 ? {
+                    id: arr[idx-1].dataset[type + 'Id'] * 1,
+                    pos: arr[idx-1].dataset[type + 'Pos'] * 1,
+                } : null
+                next = idx < arr.length-1 ? {
+                    id: arr[idx+1].dataset[type + 'Id'] * 1,
+                    pos: arr[idx+1].dataset[type + 'Pos'] * 1
+                } : null
             }
         })
             
